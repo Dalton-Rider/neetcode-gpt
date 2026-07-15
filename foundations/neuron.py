@@ -1,16 +1,23 @@
 import numpy as np
 from numpy.typing import NDArray
 
+
 class Solution:
+    def forward(self, x: NDArray[np.float64], w: NDArray[np.float64], b: float, activation: str) -> float:
+        # x: 1D input array
+        # w: 1D weight array (same length as x)
+        # b: scalar bias
+        # activation: "sigmoid" or "relu"
+        #
+        # Pre-activation: z = dot(x, w) + b
+        # Sigmoid: σ(z) = 1 / (1 + exp(-z))
+        # ReLU: max(0, z)
+        # return round(your_answer, 5)
+        xw = np.dot(x, w) + b
 
-    def get_model_prediction(self, X: NDArray[np.float64], weights: NDArray[np.float64]) -> NDArray[np.float64]:
-        # X is (n, m), weights is (m,) -> return (n,) predictions
-        # Round to 5 decimal places
-        return np.round(np.dot(X, weights), 5)
-
-    def get_error(self, model_prediction: NDArray[np.float64], ground_truth: NDArray[np.float64]) -> float:
-        # Compute mean squared error between predictions and ground truth
-        # Round to 5 decimal places
-        sum_error = (np.square(model_prediction - ground_truth))
-        mse = np.mean(sum_error)
-        return np.round(mse, 5)
+        if activation == "sigmoid":
+            return np.round(1.0 / (1.0 + np.exp(-xw)), 5)
+        elif activation == "relu":
+            return np.round(max(0.0, xw), 5)
+        else:
+            return np.round(z, 5)
